@@ -4,9 +4,7 @@ char * print_binary_representation(unsigned int i, char *buffer){
     buffer[0] = '0';
     buffer[1] = 'b';
     // fill out remaining 32 bits, 1 or 0 depending on the value in the number i
-    
-    // JARED potential solution?
-    for (int j = 34; j > 1; j--) {
+    for (int j = 33; j > 1; j--) {
         i & 1 ? buffer[j] = '1' : buffer[j] = '0'; 
         i = i>>1;
     }
