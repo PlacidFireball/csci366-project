@@ -56,9 +56,7 @@ unsigned long long int xy_to_bitval(int x, int y) {
     if ((x < 0 || x > 7) || (y < 0 || y > 7)) {
         return 0ull;
     }
-    unsigned long long pos = 1;
-    pos <<=8*y+x;
-    return pos;
+    return (unsigned long long) 1<<8*y+x;
 }
 
 struct game * game_get_current() {
