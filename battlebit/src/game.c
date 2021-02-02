@@ -75,16 +75,45 @@ int game_load_board(struct game *game, int player, char * spec) {
     // slot and return 1
     //
     // if it is invalid, you should return -1K
+    char data[4] = {' ', ' ', ' ', '\0'};
+    sscanf(data,"%c%d%d", spec);
+    int length = 0;
+    if(data[0] > 54 && data[0] < 91) {
+        if(add_ship_horizontal(&game->players[player],
+                               atoi(data[1]),
+                               atoi(data[2]),
+                               length)) {
+
+        }
+    }
 }
 
 int add_ship_horizontal(player_info *player, int x, int y, int length) {
     // implement this as part of Step 2
     // returns 1 if the ship can be added, -1 if not
     // hint: this can be defined recursively
+    if (length == 0) {
+        return 1;
+    }
+    else if (xy_to_bitval(x+length, y) == 0ull) {
+        return -1;
+    }
+    else {
+        player->ships |= xy_to_bitval(x+length, y);
+        add_ship_horizontal(player, x, y, --length);
+    }
 }
 
 int add_ship_vertical(player_info *player, int x, int y, int length) {
     // implement this as part of Step 2
     // returns 1 if the ship can be added, -1 if not
     // hint: this can be defined recursively
+    if (length == 0)
+        return 1;
+    else if (xy_to_bitval(x, y+length) == 0ull)
+        return -1;
+    else {
+        player->ships |= xy_to_bitval(x, y+length);
+        add_ship_horizontal(player, x, y, --length);
+    }
 }
