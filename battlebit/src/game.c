@@ -53,7 +53,12 @@ unsigned long long int xy_to_bitval(int x, int y) {
     //
     // you will need to use bitwise operators and some math to produce the right
     // value.
-    return 1ull;
+    if ((x < 0 || x > 7) || (y < 0 || y > 7)) {
+        return 0ull;
+    }
+    unsigned long long pos = 1;
+    pos <<=8*y+x;
+    return pos;
 }
 
 struct game * game_get_current() {
@@ -71,7 +76,7 @@ int game_load_board(struct game *game, int player, char * spec) {
     // long long value into the Game->players[player].ships data
     // slot and return 1
     //
-    // if it is invalid, you should return -1
+    // if it is invalid, you should return -1K
 }
 
 int add_ship_horizontal(player_info *player, int x, int y, int length) {
