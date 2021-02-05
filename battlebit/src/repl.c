@@ -105,6 +105,23 @@ void repl_print_ships(player_info *player_info, char_buff *buffer) {
     //  for the console.  You will need to use bit masking for each position
     //  to determine if a ship is at the position or not.  If it is present
     //  you need to print an X.  If not, you need to print a space character ' '
+    unsigned long long mask = 1ull;
+    cb_append(buffer, "  0 1 2 3 4 5 6 7 \n");
+    for (int i = 0; i < 64; i++) {
+        if (i % 8 == 0) {
+            cb_append_int(buffer, i/8);
+        }
+        if (mask & player_info->ships) {
+            cb_append(buffer, " *");
+        } else {
+            cb_append(buffer, "  ");
+        }
+        if (i % 8 == 7) {
+            cb_append(buffer, " \n");
+        }
+        mask <<= 1ull;
+    }
+    cb_print(buffer);
 }
 
 void repl_print_hits(struct player_info *player_info, struct char_buff *buffer) {
@@ -114,4 +131,9 @@ void repl_print_hits(struct player_info *player_info, struct char_buff *buffer) 
     // hits and shots values in the players game struct.  If a shot was fired at
     // a given spot and it was a hit, print 'H', if it was a miss, print 'M'.  If
     // no shot was taken at a position, print a space character ' '
+    unsigned long long mask = 1ull;
+    cb_append(buffer, "  0 1 2 3 4 5 6 7 \n");
+    for (int i = 0; i < 64; i++) {
+
+    }
 }

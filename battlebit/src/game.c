@@ -80,16 +80,17 @@ int game_load_board(struct game *game, int player, char * spec) {
     if (!spec) return -1; // handle empty spec
     int b_used = 0, c_used = 0, d_used = 0, p_used = 0, s_used = 0, curr_pos = 0;
     char ship_type = ' '; int coord_x = 0; int coord_y = 0;
+    int length = 0;
     while (curr_pos < 15) {
-        sscanf(spec,"%c%1d%1d", &ship_type, &coord_x, &coord_y);
-        spec += 3;
-        curr_pos += 3;
-        if (!strcmp(spec, "") && curr_pos < 15) return -1;
-        int length = 0;
+        sscanf(spec,"%c%1d%1d", &ship_type, &coord_x, &coord_y); // grab info about the ship
+        spec += 3; // consume the string
+        curr_pos += 3; // keep track of where we are in the string
+        if (!strcmp(spec, "") && curr_pos < 15) return -1; // handle an incomplete spec
+        /* Set ship length based on its type */
         switch (ship_type) {
             case 'B':
             case 'b':
-                if (!b_used) {
+                if (!b_used) { // handle multiple ships of the same type being placed
                     b_used = 1;
                 }
                 else return -1;
@@ -132,19 +133,18 @@ int game_load_board(struct game *game, int player, char * spec) {
                 break;
         }
         if(ship_type > 54 && ship_type < 91) { // horizontal ships
+            /* Attempt to add a horizontal ship, if it fails, return -1 */
             if(add_ship_horizontal(&game->players[player], coord_x, coord_y, length) == 1) {}
-            else {
-                return -1;
-            }
+            else return -1;
+
         }
         else if(ship_type > 96 && ship_type < 123) { // vertical ships
+            /* Attempt to add a vertical ship, if it fails, return -1 */
             if(add_ship_vertical(&game->players[player], coord_x, coord_y, length) == 1) {}
-            else {
-                return -1;
-            }
+            else return -1;
+
         }
         else return -1; // catch all other random other characters
-        ship_type = '3';
     }
     return 1;
 }
