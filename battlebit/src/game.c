@@ -77,30 +77,31 @@ int game_load_board(struct game *game, int player, char * spec) {
     // slot and return 1
     //
     // if it is invalid, you should return -1K
-    int b_used = 0, c_used = 0, d_used = 0, p_used = 0, curr_pos = 0;
+    if (!spec) return -1; // handle empty spec
+    int b_used = 0, c_used = 0, d_used = 0, p_used = 0, s_used = 0, curr_pos = 0;
     char ship_type = ' '; int coord_x = 0; int coord_y = 0;
-    while (curr_pos < 12) {
+    while (curr_pos < 15) {
         sscanf(spec,"%c%1d%1d", &ship_type, &coord_x, &coord_y);
         spec += 3;
         curr_pos += 3;
-        if (strcmp(spec, "") && curr_pos < 12) return -1;
+        if (!strcmp(spec, "") && curr_pos < 15) return -1;
         int length = 0;
         switch (ship_type) {
             case 'B':
             case 'b':
-                length = 4;
                 if (!b_used) {
                     b_used = 1;
                 }
                 else return -1;
+                length = 4;
                 break;
             case 'C':
             case 'c':
-                length = 5;
                 if (!c_used) {
                     c_used = 1;
                 }
                 else return -1;
+                length = 5;
                 break;
             case 'D':
             case 'd':
@@ -118,6 +119,14 @@ int game_load_board(struct game *game, int player, char * spec) {
                 else return -1;
                 length = 2;
                 break;
+            case 'S':
+            case 's':
+                if (!s_used) {
+                    s_used = 1;
+                }
+                else return -1;
+                length = 3;
+                break;
             default:
                 length = 0;
                 break;
@@ -129,12 +138,12 @@ int game_load_board(struct game *game, int player, char * spec) {
             }
         }
         else if(ship_type > 96 && ship_type < 123) { // vertical ships
-            if(add_ship_vertical(&game->players[player], coord_x, coord_x, length) == 1) {}
+            if(add_ship_vertical(&game->players[player], coord_x, coord_y, length) == 1) {}
             else {
                 return -1;
             }
         }
-        else return -1;
+        else return -1; // catch all other random other characters
         ship_type = '3';
     }
     return 1;
@@ -144,15 +153,16 @@ int add_ship_horizontal(player_info *player, int x, int y, int length) {
     // implement this as part of Step 2
     // returns 1 if the ship can be added, -1 if not
     // hint: this can be defined recursively
-    if (length == 0) {
-        helper_print_ull(player->ships);
-        return 1;                                 // if we've completed the placement
+    length = length - 1;
+    if (length == -1 && !xy_to_bitval(x, y) ^ player->ships) {
+        //helper_print_ull(player->ships);
+        return 1;                                               // if we've completed the placement
     }
-    else if (xy_to_bitval(x+length, y) == 0ull) return -1;  // if the ship runs off the board
-    else if (xy_to_bitval(x, y) & player->ships) return -1;    // if the ship overlaps with an already placed ship
+    else if (xy_to_bitval(x+length, y) == 0ull) return -1;   // if the ship runs off the board
+    else if (xy_to_bitval(x, y) & player->ships) return -1;     // if the ship overlaps with an already placed ship
     else {
-        player->ships |= xy_to_bitval(x+length, y);         // set the x+length, y bit to be 1
-        add_ship_horizontal(player, x, y, --length);           // recursively call add_ship_horizontal until we're done
+        player->ships |= xy_to_bitval(x+length, y);          // set the x+length, y bit to be 1
+        add_ship_horizontal(player, x, y, length);              // recursively call add_ship_horizontal until we're done
     }
 }
 
@@ -160,14 +170,15 @@ int add_ship_vertical(player_info *player, int x, int y, int length) {
     // implement this as part of Step 2
     // returns 1 if the ship can be added, -1 if not
     // hint: this can be defined recursively
-    if (length == 0) {
-        helper_print_ull(player->ships);
-        return 1;                                  // if we've completed the placement
+    length = length - 1;
+    if (length == -1 && !xy_to_bitval(x, y) ^ player->ships) {
+        //helper_print_ull(player->ships);
+        return 1;                                               // if we've completed the placement
     }
     else if (xy_to_bitval(x, y+length) == 0ull) return -1;   // if the ship runs off the board
     else if (xy_to_bitval(x, y) & player->ships) return -1;     // if the ship overlaps with an already placed ship
     else {
         player->ships |= xy_to_bitval(x, y+length);          // set the x, y+length bit to be 1
-        add_ship_vertical(player, x, y, --length);              // recursively call add_ship_vertical until we're done
+        add_ship_vertical(player, x, y, length);                // recursively call add_ship_vertical until we're done
     }
 }
