@@ -121,7 +121,6 @@ void repl_print_ships(player_info *player_info, char_buff *buffer) {
         }
         mask <<= 1ull; // shift the mask
     }
-    cb_print(buffer);
 }
 
 void repl_print_hits(struct player_info *player_info, struct char_buff *buffer) {
@@ -134,6 +133,19 @@ void repl_print_hits(struct player_info *player_info, struct char_buff *buffer) 
     unsigned long long mask = 1ull;
     cb_append(buffer, "  0 1 2 3 4 5 6 7 \n");
     for (int i = 0; i < 64; i++) {
-
+        if (i % 8 == 0) {
+            cb_append_int(buffer, i/8); // append the numbers on the side (y-values)
+        }
+        if (mask & player_info->shots) {
+            if (player_info->shots & player_info->hits)
+                cb_append(buffer, " H");
+            else
+                cb_append(buffer, " M");
+        }
+        else cb_append(buffer, "  ");
+        if (i % 8 == 7) {
+            cb_append(buffer, " \n"); // append a newline at the end of a row
+        }
+        mask <<= 1ull; // shift the mask
     }
 }
