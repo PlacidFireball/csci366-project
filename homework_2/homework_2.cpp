@@ -7,7 +7,7 @@ char * print_binary_representation(unsigned int i, char *buffer){
     for (int j = 33; j > 1; j--) {
         i & 1 ? buffer[j] = '1' : buffer[j] = '0'; 
         i = i>>1;
-    }
+    } // asasasas as
     return buffer;
 }
 
