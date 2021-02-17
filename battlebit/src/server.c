@@ -54,9 +54,20 @@ int run_server() {
     //
     // You will then create a thread running handle_client_connect, passing the player number out
     // so they can interact with the server asynchronously
+    int server_socket_fd = socket(AF_INET,
+                                  SOCK_STREAM,
+                                  IPPROTO_TCP);
+    if (server_socket_fd == -1) {
+        printf("Could not create socket\n");
+    }
+
+
 }
 
 int server_start() {
     // STEP 6 - using a pthread, run the run_server() function asynchronously, so you can still
     // interact with the game via the command line REPL
+    pthread_t server_thread;
+    pthread_create(&server_thread, NULL, run_server, NULL);
+    pthread_join(server_thread, NULL);
 }
