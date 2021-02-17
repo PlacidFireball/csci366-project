@@ -109,9 +109,8 @@ int game_load_board(struct game *game, int player, char * spec) {
     //
     // if it is invalid, you should return -1K*/
     if (!spec) return -1; // handle empty spec
-    int b_used = 0, c_used = 0, d_used = 0, p_used = 0, s_used = 0, curr_pos = 0;
-    char ship_type = ' '; int coord_x = 0; int coord_y = 0;
-    int length = 0;
+    int b_used = 0, c_used = 0, d_used = 0, p_used = 0, s_used = 0, curr_pos = 0; // usage variables
+    char ship_type = ' '; int coord_x = 0; int coord_y = 0; int length = 0; // ship data
     while (curr_pos < 15) {
         sscanf(spec,"%c%1d%1d", &ship_type, &coord_x, &coord_y); // grab info about the ship
         spec += 3; // consume the string
@@ -121,41 +120,31 @@ int game_load_board(struct game *game, int player, char * spec) {
         switch (ship_type) {
             case 'B':
             case 'b':
-                if (!b_used) { // handle multiple ships of the same type being placed
-                    b_used = 1;
-                }
+                if (!b_used) { b_used = 1; }
                 else return -1;
                 length = 4;
                 break;
             case 'C':
             case 'c':
-                if (!c_used) {
-                    c_used = 1;
-                }
+                if (!c_used) { c_used = 1; }
                 else return -1;
                 length = 5;
                 break;
             case 'D':
             case 'd':
-                if (!d_used) {
-                    d_used = 1;
-                }
+                if (!d_used) { d_used = 1; }
                 else return -1;
                 length = 3;
                 break;
             case 'P':
             case 'p':
-                if (!p_used) {
-                    p_used = 1;
-                }
+                if (!p_used) { p_used = 1; }
                 else return -1;
                 length = 2;
                 break;
             case 'S':
             case 's':
-                if (!s_used) {
-                    s_used = 1;
-                }
+                if (!s_used) { s_used = 1; }
                 else return -1;
                 length = 3;
                 break;
@@ -167,13 +156,11 @@ int game_load_board(struct game *game, int player, char * spec) {
             /* Attempt to add a horizontal ship, if it fails, return -1 */
             if(add_ship_horizontal(&game->players[player], coord_x, coord_y, length) == 1) {}
             else return -1;
-
         }
         else if(ship_type > 96 && ship_type < 123) { // vertical ships
             /* Attempt to add a vertical ship, if it fails, return -1 */
             if(add_ship_vertical(&game->players[player], coord_x, coord_y, length) == 1) {}
             else return -1;
-
         }
         else return -1; // catch all other random other characters
     }
