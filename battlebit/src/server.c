@@ -54,12 +54,12 @@ int run_server() {
     //
     // You will then create a thread running handle_client_connect, passing the player number out
     // so they can interact with the server asynchronously
-    int server_socket_fd = socket(AF_INET,
-                                  SOCK_STREAM,
-                                  IPPROTO_TCP);
+    int server_socket_fd = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
     if (server_socket_fd == -1) {
         printf("Could not create socket\n");
     }
+    int yes = 1;
+    setsockopt(server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
 
 
 }
