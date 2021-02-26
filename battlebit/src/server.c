@@ -16,6 +16,7 @@
 
 #define SOCKET_INIT_FAIL -1
 #define SERVER_FAIL -2
+#define DEBUG(info) printf(info)
 
 static game_server *SERVER;
 
@@ -42,62 +43,78 @@ void* handle_client_connect(void* arg) {
     // This function will end up looking a lot like repl_execute_command, except you will
     // be working against network sockets rather than standard out, and you will need
     // to coordinate turns via the game::status field.
-    int player = *(int*) arg; // retrieve player number from the garbo api
+    long player = (long) arg; // retrieve player number from the garbo api
     // player is coming out as 1 for some reason on the first connection
     struct char_buff* buffer = cb_create(2000); // create a buffer that we can work with
     // default strings
-    printf("%d", player);
-    char* prompt = "battleBit (? for help)";
-    char* help_str = "? - show help\nload [0-1] <string> - load a ship layout file for the given player\nshow [0-1] - shows the board for the given player\nfire [0-1] [0-7] [0-7] - fire at the given position\nsay <string> - Send the string to all players as part of a chat\nreset - reset the game\nexit - quit the server\n";
-    send(SERVER->player_sockets[0], prompt, strlen(prompt), 0) == -1 ? printf("SEND FAIL\n") : printf("SEND SUCCESS\n");
-    recv(SERVER->player_sockets[0], buffer->buffer, buffer->size, 0) != 0 ? printf("RECV FAIL\n") : printf("RECV SUCCESS\n");
-    printf("Player init\n");
-    char* command = cb_tokenize(buffer, " \n");
-    if (command) {
-        char* arg1 = cb_next_token(buffer);
-        char* arg2 = cb_next_token(buffer);
-        char* arg3 = cb_next_token(buffer);
-        if (strcmp(command, "exit") == 0) {
-            printf("goodbye!");
-            exit(EXIT_SUCCESS);
-        } else if(strcmp(command, "?") == 0) {
-            send(SERVER->player_sockets[player], help_str, strlen(help_str), 0);
-        } else if(strcmp(command, "show") == 0) {
+    char* prompt = "battleBit (? for help) > ";
+    char* help_str = "? - show help\nload <string> - load a ship layout file for the given player \\n"
+                     "show - shows the board for the given player\n"
+                     "fire [0-7] [0-7] - fire at the given position\n"
+                     "say <string> - Send the string to all players as part of a chat\n"
+                     "reset - reset the game\n"
+                     "exit - quit the server\n";
+    printf("Player init: %ld\n", player);
+    while(1) {
+        send(SERVER->player_sockets[player], prompt, strlen(prompt), 0) == -1 ? printf("SEND FAIL\n") : printf(
+                "SEND SUCCESS\n");
+        // TODO: find out why recv isn't getting anything
+        recv(SERVER->player_sockets[player], buffer->buffer, buffer->size, 0) == 0 ? printf("RECV FAIL\n") : printf(
+                "RECV SUCCESS\n");
 
-            struct char_buff *boardBuffer = cb_create(2000);
-            repl_print_board(game_get_current(), atoi(arg1), boardBuffer);
-            send(SERVER->player_threads[player], boardBuffer->buffer, boardBuffer->size, 0);
-            cb_free(boardBuffer);
+        char *command = cb_tokenize(buffer, " \n");
+        printf("%s<endstr>\n", buffer->buffer);
+        if (command) {
+            char *arg1 = cb_next_token(buffer);
+            char *arg2 = cb_next_token(buffer);
+            char *arg3 = cb_next_token(buffer);
+            if (strcmp(command, "exit") == 0) {
+                printf("Player %ld disconnect\n", player);
+                send(SERVER->player_sockets[player], "Goodbye!\n", strlen("Goodbye!\n"), 0);
+                close(SERVER->player_sockets[player]);
+                break;
+            } else if (strcmp(command, "?") == 0) {
+                send(SERVER->player_sockets[player], help_str, strlen(help_str), 0);
+            } else if (strcmp(command, "show") == 0) {
 
-        } else if(strcmp(command, "reset") == 0) {
+                struct char_buff *boardBuffer = cb_create(2000);
+                repl_print_board(game_get_current(), atoi(arg1), boardBuffer);
+                send(SERVER->player_threads[player], boardBuffer->buffer, boardBuffer->size, 0);
+                cb_free(boardBuffer);
 
-            game_init();
+            } else if (strcmp(command, "reset") == 0) {
 
-        } else if (strcmp(command, "load") == 0) {
+                game_init();
 
-            int player = atoi(arg1);
-            game_load_board(game_get_current(), player, arg2);
+            } else if (strcmp(command, "load") == 0) {
 
-        } else if (strcmp(command, "fire") == 0) {
-            int player = atoi(arg1);
-            int x = atoi(arg2);
-            int y = atoi(arg3);
-            if (x < 0 || x >= BOARD_DIMENSION || y < 0 || y >= BOARD_DIMENSION) {
-                printf("Invalid coordinate: %i %i\n", x, y);
-            } else {
-                printf("Player %i fired at %i %i\n", player + 1, x, y);
-                int result = game_fire(game_get_current(), player, x, y);
-                if (result) {
-                    printf("  HIT!!!");
+                int curr_player = atoi(arg1);
+                game_load_board(game_get_current(), curr_player, arg2);
+
+            } else if (strcmp(command, "fire") == 0) {
+                int player = atoi(arg1);
+                int x = atoi(arg2);
+                int y = atoi(arg3);
+                if (x < 0 || x >= BOARD_DIMENSION || y < 0 || y >= BOARD_DIMENSION) {
+                    printf("Invalid coordinate: %i %i\n", x, y);
                 } else {
-                    printf("  Miss");
+                    printf("Player %i fired at %i %i\n", player + 1, x, y);
+                    int result = game_fire(game_get_current(), player, x, y);
+                    if (result) {
+                        printf("  HIT!!!");
+                    } else {
+                        printf("  Miss");
+                    }
                 }
+            } else {
+                struct char_buff *unknown_buff = cb_create(30);
+                sprintf(unknown_buff->buffer, "Unknown Command: %s\n", command);
+                send(SERVER->player_sockets[player], unknown_buff->buffer, unknown_buff->size, 0);
+                cb_free(unknown_buff);
             }
-        } else {
-            printf("Unknown Command: %s\n", command);
         }
     }
-
+    return NULL;
 }
 
 void server_broadcast(char_buff *msg) {
@@ -148,7 +165,7 @@ void* run_server(void* arg) {
             SERVER->player_sockets[requests] = client_socket_fd;
             // initialize a thread for the player
             pthread_t player_thread;
-            pthread_create(&player_thread, NULL, handle_client_connect, (void*) &requests);
+            pthread_create(&player_thread, NULL, handle_client_connect, (void*)requests);
             SERVER->player_threads[requests] = player_thread;
             requests++;
         }
