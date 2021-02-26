@@ -11,12 +11,13 @@
 #include "pthread.h"
 #include<string.h>    //strlen
 #include<sys/socket.h>
+#include<sys/types.h>
 #include<arpa/inet.h>    //inet_addr
 #include<unistd.h>    //write
+#include <errno.h>
 
 #define SOCKET_INIT_FAIL -1
 #define SERVER_FAIL -2
-#define DEBUG(info) printf(info)
 
 static game_server *SERVER;
 
@@ -28,6 +29,7 @@ void init_server() {
     }
 }
 
+pthread_mutex_t lock;
 void* handle_client_connect(void* arg) {
     // STEP 8 - This is the big one: you will need to re-implement the REPL code from
     // the repl.c file, but with a twist: you need to make sure that a player only
@@ -56,14 +58,12 @@ void* handle_client_connect(void* arg) {
                      "exit - quit the server\n";
     printf("Player init: %ld\n", player);
     while(1) {
-        send(SERVER->player_sockets[player], prompt, strlen(prompt), 0) == -1 ? printf("SEND FAIL\n") : printf(
-                "SEND SUCCESS\n");
-        // TODO: find out why recv isn't getting anything
-        recv(SERVER->player_sockets[player], buffer->buffer, buffer->size, 0) == 0 ? printf("RECV FAIL\n") : printf(
-                "RECV SUCCESS\n");
-
+        cb_reset(buffer);
+        send(SERVER->player_sockets[player], prompt, strlen(prompt), 0);
+        /*ssize_t bytes =*/recv(SERVER->player_sockets[player], buffer->buffer, buffer->size, 0);
+        printf("RECV SUCCESS - received: %s", buffer->buffer);
         char *command = cb_tokenize(buffer, " \n");
-        printf("%s<endstr>\n", buffer->buffer);
+        printf("command: %s<endstr>\n", command);
         if (command) {
             char *arg1 = cb_next_token(buffer);
             char *arg2 = cb_next_token(buffer);
@@ -78,7 +78,7 @@ void* handle_client_connect(void* arg) {
             } else if (strcmp(command, "show") == 0) {
 
                 struct char_buff *boardBuffer = cb_create(2000);
-                repl_print_board(game_get_current(), atoi(arg1), boardBuffer);
+                repl_print_board(game_get_current(), (int) player, boardBuffer);
                 send(SERVER->player_threads[player], boardBuffer->buffer, boardBuffer->size, 0);
                 cb_free(boardBuffer);
 
@@ -88,8 +88,7 @@ void* handle_client_connect(void* arg) {
 
             } else if (strcmp(command, "load") == 0) {
 
-                int curr_player = atoi(arg1);
-                game_load_board(game_get_current(), curr_player, arg2);
+                game_load_board(game_get_current(), (int) player, arg1);
 
             } else if (strcmp(command, "fire") == 0) {
                 int player = atoi(arg1);
@@ -138,6 +137,7 @@ void* run_server(void* arg) {
         perror("ERROR | Server socket initialization failed\n");
         exit(SOCKET_INIT_FAIL);
     }
+    SERVER->server_socket = server_socket_fd;
     int yes = 1;
     setsockopt(server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
     struct sockaddr_in server;
@@ -156,11 +156,10 @@ void* run_server(void* arg) {
         // bind success, listen for incoming connections
         listen(server_socket_fd, 2);
         struct sockaddr_in client; socklen_t size_from_connect; int client_socket_fd;
-        int requests = 0;
+        long requests = 0;
         while ((client_socket_fd = accept(server_socket_fd,
                                           (struct sockaddr *) &client,
                                           &size_from_connect)) > 0) {
-            printf("Connection!\n");
             // on connect, add the socket to the player_sockets array
             SERVER->player_sockets[requests] = client_socket_fd;
             // initialize a thread for the player
@@ -183,4 +182,5 @@ int server_start() {
     pthread_create(&server_thread, NULL, run_server, NULL);
     SERVER->server_thread = server_thread;
     pthread_join(server_thread, NULL);
+    return 0;
 }

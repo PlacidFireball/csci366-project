@@ -13,6 +13,7 @@ typedef  struct game_server {
     pthread_t server_thread; // main server thread that listens for connections
     pthread_t player_threads[2]; // threads managing I/O from the two sockets
     int player_sockets[2]; // the client sockets that are inputing and outputting from the network
+    int server_socket;
 } game_server;
 
 int server_start();
