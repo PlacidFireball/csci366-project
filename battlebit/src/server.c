@@ -30,6 +30,7 @@ void init_server() {
 }
 
 pthread_mutex_t lock;
+struct game* CURR_GAME;
 void* handle_client_connect(void* arg) {
     // STEP 8 - This is the big one: you will need to re-implement the REPL code from
     // the repl.c file, but with a twist: you need to make sure that a player only
@@ -45,6 +46,8 @@ void* handle_client_connect(void* arg) {
     // This function will end up looking a lot like repl_execute_command, except you will
     // be working against network sockets rather than standard out, and you will need
     // to coordinate turns via the game::status field.
+    CURR_GAME == NULL ? game_init() : printf("");
+    CURR_GAME = game_get_current();
     long player = (long) arg; // retrieve player number from the garbo api
     // player is coming out as 1 for some reason on the first connection
     struct char_buff* buffer = cb_create(2000); // create a buffer that we can work with
@@ -62,7 +65,7 @@ void* handle_client_connect(void* arg) {
         send(SERVER->player_sockets[player], prompt, strlen(prompt), 0);
         /*ssize_t bytes =*/recv(SERVER->player_sockets[player], buffer->buffer, buffer->size, 0);
         printf("RECV SUCCESS - received: %s", buffer->buffer);
-        char *command = cb_tokenize(buffer, " \n");
+        char *command = cb_tokenize(buffer, " \n\r");
         printf("command: %s<endstr>\n", command);
         if (command) {
             char *arg1 = cb_next_token(buffer);
@@ -78,8 +81,8 @@ void* handle_client_connect(void* arg) {
             } else if (strcmp(command, "show") == 0) {
 
                 struct char_buff *boardBuffer = cb_create(2000);
-                repl_print_board(game_get_current(), (int) player, boardBuffer);
-                send(SERVER->player_threads[player], boardBuffer->buffer, boardBuffer->size, 0);
+                repl_print_board(CURR_GAME, (int) player, boardBuffer);
+                send(SERVER->player_sockets[player], boardBuffer->buffer, boardBuffer->size, 0);
                 cb_free(boardBuffer);
 
             } else if (strcmp(command, "reset") == 0) {
@@ -91,9 +94,8 @@ void* handle_client_connect(void* arg) {
                 game_load_board(game_get_current(), (int) player, arg1);
 
             } else if (strcmp(command, "fire") == 0) {
-                int player = atoi(arg1);
-                int x = atoi(arg2);
-                int y = atoi(arg3);
+                int x = atoi(arg1);
+                int y = atoi(arg2);
                 if (x < 0 || x >= BOARD_DIMENSION || y < 0 || y >= BOARD_DIMENSION) {
                     printf("Invalid coordinate: %i %i\n", x, y);
                 } else {
