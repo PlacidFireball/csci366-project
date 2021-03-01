@@ -1,4 +1,4 @@
-# !/bin/zsh
+#!/bin/zsh
 
 # script for connecting two dummy clients to a localhost server on port 9876
 telnet localhost 9876 &

@@ -14,11 +14,12 @@
 #include<sys/types.h>
 #include<arpa/inet.h>    //inet_addr
 #include<unistd.h>    //write
-#include <errno.h>
+//#include <errno.h>  // debug
 
 #define SOCKET_INIT_FAIL -1
 #define SERVER_FAIL -2
 
+// global variables
 static game_server *SERVER;
 pthread_mutex_t lock;
 struct game* CURR_GAME;
@@ -46,11 +47,20 @@ void* handle_client_connect(void* arg) {
     // This function will end up looking a lot like repl_execute_command, except you will
     // be working against network sockets rather than standard out, and you will need
     // to coordinate turns via the game::status field.
+
+    /*
+     * Handles a client connecting to the game server. Locks the other thread from
+     * executing whenever a command is called. (erring on the safe side)
+     */
+    pthread_mutex_lock(&lock);
     CURR_GAME == NULL ? game_init() : printf("");
-    long player = (long) arg;
-    int player_turn_status = !player ? PLAYER_0_TURN : PLAYER_1_TURN;
+    pthread_mutex_unlock(&lock);
+    long player = (long) arg;   // retrieve the player from the weird api
+    long other_player = player ? 0 : 1;     // grab the other player
+    int player_turn_status = !player ? PLAYER_0_TURN : PLAYER_1_TURN;   // set each individual's status
     int other_player_status = player ? PLAYER_0_TURN : PLAYER_1_TURN;
     struct char_buff* buffer = cb_create(100); // create a buffer that we can work with
+    /* CONSTANT STRINGS */
     const char* prompt = "battleBit (? for help) > ";
     const char* help_str = "? - show help\nload <string> - load a ship layout file for the given player\n"
                      "show - shows the board for the given player\n"
@@ -65,20 +75,37 @@ void* handle_client_connect(void* arg) {
         send(SERVER->player_sockets[player], prompt, strlen(prompt), 0);
         recv(SERVER->player_sockets[player], buffer->buffer, buffer->size, 0);
         /* parse user input */
-        char *command = cb_tokenize(buffer, " \n\r");
+        char *command = cb_tokenize(buffer, " \n\r");   // note parsing on \r -> all
+                                                                // messages sent over server include \r at the end
         if (command) {
-            char *arg1 = cb_next_token(buffer);
+            char *arg1 = cb_next_token(buffer);     // retrieve args
             char *arg2 = cb_next_token(buffer);
             if (strcmp(command, "exit") == 0) {
+
+            // disconnects the player from the server
                 pthread_mutex_lock(&lock);
                 send(SERVER->player_sockets[player], "Goodbye!\n", strlen("Goodbye!\n"), 0);
-                close(SERVER->player_sockets[player]);
+                close(SERVER->player_sockets[player]);  // close the connection
+                char_buff* temp = cb_create(50);
+                cb_append(temp, "Other player disconnected from the server. Goodbye!\n");
+                send(SERVER->player_sockets[other_player], temp->buffer, temp->size, 0);
+                cb_free(temp);
+            // then closes the other player's connection and cancels the thread
+                close(SERVER->player_sockets[other_player]);
+                pthread_cancel(SERVER->player_threads[other_player]);
                 pthread_mutex_unlock(&lock);
                 break;
+
             } else if (strcmp(command, "?") == 0) {
+
+            // prints off the help menu to the player
+                pthread_mutex_lock(&lock);
                 send(SERVER->player_sockets[player], help_str, strlen(help_str), 0);
+                pthread_mutex_unlock(&lock);
+
             } else if (strcmp(command, "show") == 0) {
 
+            // displays the hits/misses board and ships board to the player
                 pthread_mutex_lock(&lock);
                 struct char_buff *boardBuffer = cb_create(2000);
                 repl_print_board(CURR_GAME, (int) player, boardBuffer);
@@ -88,31 +115,42 @@ void* handle_client_connect(void* arg) {
 
             } else if (strcmp(command, "reset") == 0) {
 
+            // resets the game
                 pthread_mutex_lock(&lock);
                 game_init();
                 pthread_mutex_unlock(&lock);
 
             } else if (strcmp(command, "load") == 0) {
 
+            // loads a board into the player's board
                 pthread_mutex_lock(&lock);
                 game_load_board(CURR_GAME, (int) player, arg1);
                 pthread_mutex_unlock(&lock);
 
             } else if (strcmp(command, "fire") == 0) {
+
+            // allows the player to fire on the other player IF it is their turn
+                pthread_mutex_lock(&lock);
                 int x = atoi(arg1);
                 int y = atoi(arg2);
-                pthread_mutex_lock(&lock);
                 if (CURR_GAME->status == player_turn_status) {
-
                     if (x < 0 || x >= BOARD_DIMENSION || y < 0 || y >= BOARD_DIMENSION) {
-                        send(SERVER->player_sockets[player], "Invalid coordinate: %i %i\n",
-                             strlen("Invalid coordinate: %i %i\n"), 0);
+                    // handles invalid coordinates
+                        char_buff *invalid = cb_create(100);
+                        sprintf(invalid->buffer, "Invalid coordinate %i %i\n", x, y);
+                        send(SERVER->player_sockets[player], invalid->buffer,
+                             invalid->size, 0);
+                        cb_free(invalid);
                     } else {
+                    // perform the shot calculations
+                        // notify the players
                         char_buff* fire_buff = cb_create(50);
                         sprintf(fire_buff->buffer, "\nPlayer %ld fired at %i %i\n", player + 1, x, y);
-                        int result = game_fire(CURR_GAME, (int) player, x, y);
                         server_broadcast(fire_buff);
                         cb_reset(fire_buff);
+
+                        // calculate whether on not it was a hit
+                        int result = game_fire(CURR_GAME, (int) player, x, y);
                         if (result) {
                             cb_append(fire_buff, "\tHit!!!\n");
                             server_broadcast(fire_buff);
@@ -120,20 +158,24 @@ void* handle_client_connect(void* arg) {
                             cb_append(fire_buff, "\tMiss\n");
                             server_broadcast(fire_buff);
                         }
+
+                        // TODO: debug this portion of code
                         cb_reset(fire_buff);
                         cb_append(fire_buff, prompt);
                         server_broadcast(fire_buff);
                         cb_free(fire_buff);
+                        CURR_GAME->status = other_player_status;
                     }
-                    CURR_GAME->status = other_player_status;
-
                 }
                 else {
+                // handle when it isn't their turn and they try to fire
                     send(SERVER->player_sockets[player], "It isn't your turn!\n",
                          strlen("It isn't your turn!\n"), 0);
                 }
                 pthread_mutex_unlock(&lock);
+
             } else {
+            // handles invalid input
                 pthread_mutex_lock(&lock);
                 struct char_buff *unknown_buff = cb_create(30);
                 sprintf(unknown_buff->buffer, "Unknown Command: %s\n", command);
@@ -186,12 +228,13 @@ void* run_server(void* arg) {
         while ((client_socket_fd = accept(server_socket_fd,
                                           (struct sockaddr *) &client,
                                           &size_from_connect)) > 0 && requests < 2)   {
-            SERVER->player_sockets[requests] = client_socket_fd;
-            pthread_t player_thread;
+            SERVER->player_sockets[requests] = client_socket_fd; // keep track of the socket
+            pthread_t player_thread; // starts a new thread
             pthread_create(&player_thread, NULL, handle_client_connect, (void*)requests);
-            SERVER->player_threads[requests] = player_thread;
+            SERVER->player_threads[requests] = player_thread; // saves the thread
             requests++;
         }
+        // wait for both of the player threads to terminate
         pthread_join(SERVER->player_threads[0], NULL);
         pthread_join(SERVER->player_threads[1], NULL);
     }
