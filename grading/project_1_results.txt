@@ -1,0 +1,57 @@
+Running main() from /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/battlebit/googletest/lib/googletest/src/gtest_main.cc
+[==========] Running 12 tests from 5 test suites.
+[----------] Global test environment set-up.
+[----------] 3 tests from char_buff
+[ RUN      ] char_buff.bootstrap
+size: 2000, append_offset: 0
+string: 
+size: 2000, append_offset: 3
+string: Foo
+size: 2000, append_offset: 6
+string: FooFoo
+[       OK ] char_buff.bootstrap (0 ms)
+[ RUN      ] char_buff.noOverFlow
+size: 3, append_offset: 0
+string: 
+size: 3, append_offset: 3
+string: Foo
+size: 3, append_offset: 3
+string: Foo
+[       OK ] char_buff.noOverFlow (0 ms)
+[ RUN      ] char_buff.tokenize
+[       OK ] char_buff.tokenize (0 ms)
+[----------] 3 tests from char_buff (0 ms total)
+
+[----------] 2 tests from xy_to_bitval
+[ RUN      ] xy_to_bitval.good_values
+[       OK ] xy_to_bitval.good_values (0 ms)
+[ RUN      ] xy_to_bitval.bad_values
+[       OK ] xy_to_bitval.bad_values (0 ms)
+[----------] 2 tests from xy_to_bitval (0 ms total)
+
+[----------] 2 tests from add_ship_horizontal
+[ RUN      ] add_ship_horizontal.empty_ship
+[       OK ] add_ship_horizontal.empty_ship (0 ms)
+[ RUN      ] add_ship_horizontal.load_ship
+[       OK ] add_ship_horizontal.load_ship (0 ms)
+[----------] 2 tests from add_ship_horizontal (0 ms total)
+
+[----------] 2 tests from add_ship_vertical
+[ RUN      ] add_ship_vertical.empty_ship
+[       OK ] add_ship_vertical.empty_ship (0 ms)
+[ RUN      ] add_ship_vertical.load_ship
+[       OK ] add_ship_vertical.load_ship (0 ms)
+[----------] 2 tests from add_ship_vertical (0 ms total)
+
+[----------] 3 tests from game_load_board
+[ RUN      ] game_load_board.empty_spec
+[       OK ] game_load_board.empty_spec (0 ms)
+[ RUN      ] game_load_board.incomplete_spec
+[       OK ] game_load_board.incomplete_spec (0 ms)
+[ RUN      ] game_load_board.valid_spec
+[       OK ] game_load_board.valid_spec (0 ms)
+[----------] 3 tests from game_load_board (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 12 tests from 5 test suites ran. (0 ms total)
+[  PASSED  ] 12 tests.
