@@ -1,3 +1,27 @@
-;; TODO - implement counting up from 1 to 10
 ;; in Little Man Computer assembly
 ;; Paste the code below, along with the output
+
+;; Counting implemented in LMC assembly by Jared Weiss 3/11/2021
+LOOP    ADD ONE     ;; add one into the accumulator
+        OUT         ;; print it out
+        SUB TEN     ;; subtract 10 from the accumulator
+        BRZ EXIT    ;; check if it's zero, if it is, exit
+        ADD TEN     ;; otherwise undo the damage
+        BRA LOOP    ;; jump back to the top of the loop
+ONE     DAT 1       ;; constant, 1
+TEN     DAT 10      ;; constant, 10
+EXIT    HLT         ;; exit
+
+;; END PROGRAM
+
+OUTPUT
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10

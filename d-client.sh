@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/zsh
 
-echo "localhost 9876"
+echo "open localhost 9876" # opens a connection
 sleep 2
-echo "?"
-echo "load C00b02D23S47p71"
-echo "show"
-echo 
-echo
+echo "?" # sends the '?' command to the server
+sleep 2
+echo "load C00b02D23S47p71" # sends the load command to the server
+sleep 2
+echo "show" # sends the show command to the server
 sleep 2

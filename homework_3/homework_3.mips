@@ -1,3 +1,21 @@
-;; TODO - implement counting up from 1 to 10
-;; in MIPS assembly
-;; Paste the code below, along with the output
+# TODO - implement counting up from 1 to 10
+# in MIPS assembly
+# Paste the code below, along with the output
+
+.text
+.globl main
+main:
+    li $a0 1   # starting number
+    li $v0 1   # print integer syscall
+loop:
+    add $a0, $a0, one 
+    syscall     # make the syscall
+    bne $t0, ten, loop
+    li $v0, 4   # exit syscall
+    syscall     
+
+.data
+one: .word 1
+ten: .word 10
+
+# END PROGRAM
