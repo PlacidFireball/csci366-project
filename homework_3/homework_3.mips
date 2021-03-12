@@ -1,7 +1,8 @@
-# TODO - implement counting up from 1 to 10
+# - implement counting up from 1 to 10
 # in MIPS assembly
 # Paste the code below, along with the output
 
+# Haven't gotten to test it yet, don't even know if this works :)
 .text
 .globl main
 main:
