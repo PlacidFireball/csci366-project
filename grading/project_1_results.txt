@@ -49,9 +49,9 @@ string: Foo
 [ RUN      ] game_load_board.incomplete_spec
 [       OK ] game_load_board.incomplete_spec (0 ms)
 [ RUN      ] game_load_board.valid_spec
-[       OK ] game_load_board.valid_spec (0 ms)
-[----------] 3 tests from game_load_board (0 ms total)
+[       OK ] game_load_board.valid_spec (1 ms)
+[----------] 3 tests from game_load_board (1 ms total)
 
 [----------] Global test environment tear-down
-[==========] 12 tests from 5 test suites ran. (0 ms total)
+[==========] 12 tests from 5 test suites ran. (1 ms total)
 [  PASSED  ] 12 tests.
