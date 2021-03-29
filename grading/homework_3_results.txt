@@ -1,0 +1,16 @@
+3,15c3
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 30 column 1: "OUTPUT" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 31 column 1: "1" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 32 column 1: "2" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 33 column 1: "3" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 34 column 1: "4" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 35 column 1: "5" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 36 column 1: "6" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 37 column 1: "7" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 38 column 1: "8" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 39 column 1: "9" is not a valid character string
+< Error in /home/carson/Projects/msu/csci-366-spring2021/grading/scripts/repos/jared_weiss/homework_3/tmp.mips line 40 column 1: "10" is not a valid character string
+< 
+< Processing terminated due to errors.
+---
+> 12345678910
