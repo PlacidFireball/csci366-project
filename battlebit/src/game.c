@@ -45,33 +45,24 @@ int game_fire(game *game, int player, int x, int y) {
     struct player_info* from_player = &game->players[player]; // grab the shooting player
     struct player_info* to_player = NULL;
     switch (player) { // get the other player
-        case 1:
-            to_player = &game->players[0];
-            break;
-        case 0:
-            to_player = &game->players[1];
-            break;
-        default:
-            break;
+        case 1: to_player = &game->players[0]; break;
+        case 0: to_player = &game->players[1]; break;
+        default: break;
     }
-    // handle NULL player values
-    if (!to_player) return 0;
-    if (!from_player) return 0;
-    // update player turns
-    if (player == 1) game->status = PLAYER_0_TURN;
-    else game->status = PLAYER_1_TURN;
+    if (!to_player || !from_player) return 0; // handle NULL player values
+    game->status = player ? PLAYER_0_TURN : PLAYER_1_TURN; // update player turns
     unsigned long long shot = xy_to_bitval(x, y); // calculate the shot (to be used later)
     from_player->shots |= shot;
-    if (to_player->ships & shot) {
-        from_player->hits |= shot;
-        to_player->ships = to_player->ships & (~shot);
-        if (to_player->ships == 0ull && player == 0)
+    if (to_player->ships & shot) { // if the shot hit
+        from_player->hits |= shot; // set the from_player.hits at shot to 1
+        to_player->ships = to_player->ships & (~shot); // delete that section of ship
+        if (to_player->ships == 0ull && player == 0) // check for winners
             game->status = PLAYER_0_WINS;
         else if (to_player->ships == 0ull && player == 1)
             game->status = PLAYER_1_WINS;
         return 1;
     }
-    return 0;
+    return 0; // otherwise it wasn't a hit so move on
 }
 
 unsigned long long int xy_to_bitval(int x, int y) {
@@ -86,10 +77,8 @@ unsigned long long int xy_to_bitval(int x, int y) {
     //
     // you will need to use bitwise operators and some math to produce the right
     // value.*/
-    if ((x < 0 || x > 7) || (y < 0 || y > 7)) {
-        return 0ull;
-    }
-    return (unsigned long long) 1<<8*y+x;
+    if ((x < 0 || x > 7) || (y < 0 || y > 7)) { return 0ull; } // invalid coords
+    return (unsigned long long) 1<<(8*y+x); // 8*y <- get correct row, x <- get correct column
 }
 
 struct game * game_get_current() {
@@ -152,19 +141,13 @@ int game_load_board(struct game *game, int player, char * spec) {
                 length = 0;
                 break;
         }
-        if(ship_type > 54 && ship_type < 91) { // horizontal ships
-            /* Attempt to add a horizontal ship, if it fails, return -1 */
-            if(add_ship_horizontal(&game->players[player], coord_x, coord_y, length) == 1) {}
-            else return -1;
-        }
-        else if(ship_type > 96 && ship_type < 123) { // vertical ships
-            /* Attempt to add a vertical ship, if it fails, return -1 */
-            if(add_ship_vertical(&game->players[player], coord_x, coord_y, length) == 1) {}
-            else return -1;
-        }
-        else return -1; // catch all other random other characters
+        int _return = (ship_type > 54 && ship_type < 91) ?
+            add_ship_horizontal(&game->players[player], coord_x, coord_y, length) : // attempt to add a horizontal ship (uppercase letters)
+        (ship_type > 96 && ship_type < 123) ?
+            add_ship_vertical(&game->players[player], coord_x, coord_y, length) : -1; // attempt to add a vertical ship (lowercase letters)
+        if (_return == -1) return -1;
     }
-    if (game->players[0].ships != 0ull && game->players[1].ships != 0ull)
+    if (game->players[0].ships != 0ull && game->players[1].ships != 0ull) // if both player fields have been set set the status to PLAYER_0_TURN
         game->status = PLAYER_0_TURN;
     return 1;
 }
@@ -174,10 +157,7 @@ int add_ship_horizontal(player_info *player, int x, int y, int length) {
     // returns 1 if the ship can be added, -1 if not
     // hint: this can be defined recursively*/
     length = length - 1;
-    if (length == -1 && !xy_to_bitval(x, y) ^ player->ships) {
-        //helper_print_ull(player->ships);  // print the board after adding a ship
-        return 1;                                               // if we've completed the placement
-    }
+    if (length == -1 && !xy_to_bitval(x, y) ^ player->ships) { return 1; } // check for successful ship add
     else if (xy_to_bitval(x+length, y) == 0ull) return -1;   // if the ship runs off the board
     else if (xy_to_bitval(x, y) & player->ships) return -1;     // if the ship overlaps with an already placed ship
     else {
@@ -191,10 +171,7 @@ int add_ship_vertical(player_info *player, int x, int y, int length) {
     // returns 1 if the ship can be added, -1 if not
     // hint: this can be defined recursively*/
     length = length - 1;
-    if (length == -1 && !xy_to_bitval(x, y) ^ player->ships) {
-        //helper_print_ull(player->ships);  // print the board after adding a ship
-        return 1;                                               // if we've completed the placement
-    }
+    if (length == -1 && !xy_to_bitval(x, y) ^ player->ships) { return 1; } // check for successful ship add
     else if (xy_to_bitval(x, y+length) == 0ull) return -1;   // if the ship runs off the board
     else if (xy_to_bitval(x, y) & player->ships) return -1;     // if the ship overlaps with an already placed ship
     else {
