@@ -81,7 +81,6 @@ void* handle_client_connect(void* arg) {
             char *arg1 = cb_next_token(buffer);     // retrieve args
             char *arg2 = cb_next_token(buffer);
             if (strcmp(command, "exit") == 0) {
-
             // disconnects the player from the server
                 pthread_mutex_lock(&lock);
                 send(SERVER->player_sockets[player], "Goodbye!\n", strlen("Goodbye!\n"), 0);
@@ -90,9 +89,7 @@ void* handle_client_connect(void* arg) {
                 cb_append(temp, "Other player disconnected from the server. Goodbye!\n");
                 send(SERVER->player_sockets[other_player], temp->buffer, temp->size, 0);
                 cb_free(temp);
-            // then closes the other player's connection and cancels the thread
                 close(SERVER->player_sockets[other_player]);
-                pthread_cancel(SERVER->player_threads[other_player]);
                 pthread_mutex_unlock(&lock);
                 break;
 
@@ -144,26 +141,18 @@ void* handle_client_connect(void* arg) {
                     } else {
                     // perform the shot calculations
                         // notify the players
-                        char_buff* fire_buff = cb_create(50);
-                        sprintf(fire_buff->buffer, "\nPlayer %ld fired at %i %i\n", player + 1, x, y);
-                        server_broadcast(fire_buff);
-                        cb_reset(fire_buff);
-
+                        char_buff* fire_buff = cb_create(500);
+                        char tmp[40];
+                        sprintf(tmp, "\nPlayer %ld fired at %i %i....", player + 1, x, y);
+                        cb_append(fire_buff, tmp);
                         // calculate whether on not it was a hit
                         int result = game_fire(CURR_GAME, (int) player, x, y);
                         if (result) {
                             cb_append(fire_buff, "\tHit!!!\n");
-                            server_broadcast(fire_buff);
                         } else {
                             cb_append(fire_buff, "\tMiss\n");
-                            server_broadcast(fire_buff);
                         }
-
-                        // TODO: debug this portion of code
-                        cb_reset(fire_buff);
-                        cb_append(fire_buff, prompt);
                         server_broadcast(fire_buff);
-                        cb_free(fire_buff);
                         CURR_GAME->status = other_player_status;
                     }
                 }

@@ -42,6 +42,7 @@ void repl_execute_command(struct char_buff * buffer) {
             printf("goodbye!");
             exit(EXIT_SUCCESS);
         } else if(strcmp(command, "?") == 0) {
+
             printf("? - show help\n");
             printf("load [0-1] <string> - load a ship layout file for the given player\n");
             printf("show [0-1] - shows the board for the given player\n");
@@ -50,8 +51,12 @@ void repl_execute_command(struct char_buff * buffer) {
             printf("reset - reset the game\n");
             printf("server - start the server\n");
             printf("exit - quit the server\n");
+
         } else if(strcmp(command, "server") == 0) {
+
             server_start();
+            printf("Server started!\n");
+
         } else if(strcmp(command, "show") == 0) {
 
             struct char_buff *boardBuffer = cb_create(2000);
@@ -68,22 +73,28 @@ void repl_execute_command(struct char_buff * buffer) {
             int player = atoi(arg1);
             game_load_board(game_get_current(), player, arg2);
 
+        } else if (strcmp(command, "shortcut") == 0) {
+
+            game* curr_game = game_get_current();
+            curr_game->players[0].ships = 0ull;
+
         } else if (strcmp(command, "fire") == 0) {
-            int player = atoi(arg1);
-            int x = atoi(arg2);
-            int y = atoi(arg3);
-            if (x < 0 || x >= BOARD_DIMENSION || y < 0 || y >= BOARD_DIMENSION) {
-                printf("Invalid coordinate: %i %i\n", x, y);
-            } else {
-                printf("Player %i fired at %i %i\n", player + 1, x, y);
-                int result = game_fire(game_get_current(), player, x, y);
-                if (result) {
-                    printf("  HIT!!!");
+                int player = atoi(arg1);
+                int x = atoi(arg2);
+                int y = atoi(arg3);
+                if (x < 0 || x >= BOARD_DIMENSION || y < 0 || y >= BOARD_DIMENSION) {
+                    printf("Invalid coordinate: %i %i\n", x, y);
                 } else {
-                    printf("  Miss");
+                    printf("Player %i fired at %i %i\n", player + 1, x, y);
+                    int result = game_fire(game_get_current(), player, x, y);
+                    if (result) {
+                        printf("  HIT!!!");
+                    } else {
+                        printf("  Miss");
+                    }
                 }
             }
-        } else {
+        else {
             printf("Unknown Command: %s\n", command);
         }
     }
