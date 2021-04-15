@@ -96,5 +96,5 @@ string: Foo
 [----------] 2 tests from repl_print_hits (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 23 tests from 9 test suites ran. (1 ms total)
+[==========] 23 tests from 9 test suites ran. (0 ms total)
 [  PASSED  ] 23 tests.
