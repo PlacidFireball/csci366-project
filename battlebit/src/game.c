@@ -41,14 +41,10 @@ int game_fire(game *game, int player, int x, int y) {
     //
     //  If the opponents ships value is 0, they have no remaining ships, and you should set the game state to
     //  PLAYER_1_WINS or PLAYER_2_WINS depending on who won.*/
+    if (player < 0 || player > 1) return 0;
     if ((x<0 || x>7) || (y<0 || y>7)) return 0; // handle invalid firing
     struct player_info* from_player = &game->players[player]; // grab the shooting player
-    struct player_info* to_player = NULL;
-    switch (player) { // get the other player
-        case 1: to_player = &game->players[0]; break;
-        case 0: to_player = &game->players[1]; break;
-        default: break;
-    }
+    struct player_info* to_player = player ? &game->players[0] : &game->players[1];
     if (!to_player || !from_player) return 0; // handle NULL player values
     game->status = player ? PLAYER_0_TURN : PLAYER_1_TURN; // update player turns
     unsigned long long shot = xy_to_bitval(x, y); // calculate the shot (to be used later)
