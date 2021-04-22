@@ -75,7 +75,8 @@ void repl_execute_command(struct char_buff * buffer) {
 
         } else if(strcmp(command, "shortcut") == 0) {
 
-                game_get_current()->players[1].ships = 1ull;
+            game_get_current()->players[1].ships = 1ull;
+            printf("Player 1 set to 1ull, fire at 0 0\n");
 
         } else if (strcmp(command, "fire") == 0) {
                 int player = atoi(arg1);

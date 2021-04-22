@@ -59,7 +59,7 @@ void* handle_client_connect(void* arg) {
     long other_player = player ? 0 : 1;     // grab the other player
     int player_turn_status = !player ? PLAYER_0_TURN : PLAYER_1_TURN;   // set each individual's status
     int other_player_status = player ? PLAYER_0_TURN : PLAYER_1_TURN;
-    struct char_buff* buffer = cb_create(100); // create a buffer that we can work with
+    struct char_buff* buffer = cb_create(5000); // create a buffer that we can work with
     /* CONSTANT STRINGS */
     const char* prompt = "battleBit (? for help) > ";
     const char* help_str = "? - show help\nload <string> - load a ship layout file for the given player\n"
@@ -78,8 +78,6 @@ void* handle_client_connect(void* arg) {
         char *command = cb_tokenize(buffer, " \n\r");   // note parsing on \r -> all
                                                                 // messages sent over server include \r at the end
         if (command) {
-            char *arg1 = cb_next_token(buffer);     // retrieve args
-            char *arg2 = cb_next_token(buffer);
             if (strcmp(command, "exit") == 0) {
             // disconnects the player from the server
                 pthread_mutex_lock(&lock);
@@ -110,14 +108,17 @@ void* handle_client_connect(void* arg) {
                 cb_free(boardBuffer);
                 pthread_mutex_unlock(&lock);
 
-            } else if (strcmp(command, "say")) {
+            } else if (strcmp(command, "say") == 0) {
 
                 pthread_mutex_lock(&lock);
-                struct char_buff *say_buff = cb_create(2000);
-                while ((command = cb_next_token(buffer))) {
-                    cb_append(say_buff, command);
+                cb_next_token(buffer); // advance so we don't get the "say" portion of the message
+                struct char_buff *say_buff = cb_create(2000); // allocate say_buff
+                while (command) { // while our args aren't null
+                    cb_append(say_buff, command); // append the word onto the say buffer
+                    cb_append(say_buff, " "); // add a space between the words
+                    command = cb_next_token(buffer); // advance command
                 }
-                send(SERVER->player_sockets[other_player], say_buff->buffer, say_buff->size, 0);
+                send(SERVER->player_sockets[other_player], say_buff->buffer, say_buff->size, 0); // sends the message
                 pthread_mutex_unlock(&lock);
 
             }else if (strcmp(command, "reset") == 0) {
@@ -131,6 +132,7 @@ void* handle_client_connect(void* arg) {
 
             // loads a board into the player's board
                 pthread_mutex_lock(&lock);
+                char *arg1 = cb_next_token(buffer);     // retrieve args
                 game_load_board(CURR_GAME, (int) player, arg1);
                 pthread_mutex_unlock(&lock);
 
@@ -138,6 +140,8 @@ void* handle_client_connect(void* arg) {
 
             // allows the player to fire on the other player IF it is their turn
                 pthread_mutex_lock(&lock);
+                char *arg1 = cb_next_token(buffer);     // retrieve args
+                char *arg2 = cb_next_token(buffer);
                 int x = atoi(arg1);
                 int y = atoi(arg2);
                 if (CURR_GAME->status == player_turn_status) {
@@ -216,12 +220,13 @@ void* run_server(void* arg) {
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons(BATTLEBIT_PORT);
 
+    // Bind the socket
     if (bind(server_socket_fd, (struct sockaddr *) &server, sizeof(server)) < 0) {
         perror("ERROR | Server bind failed\n");
         exit(SERVER_FAIL);
     }
     else {
-        listen(server_socket_fd, 2);
+        listen(server_socket_fd, 2); // listen for incoming connections
         struct sockaddr_in client; socklen_t size_from_connect; int client_socket_fd;
         long requests = 0; // long because it is 8 bytes (same as void*, avoids weird casting issues)
         while ((client_socket_fd = accept(server_socket_fd,
@@ -244,8 +249,6 @@ int server_start() {
     // STEP 6 - using a pthread, run the run_server() function asynchronously, so you can still
     // interact with the game via the command line REPL
     init_server();
-    pthread_t server_thread;
-    pthread_create(&server_thread, NULL, run_server, NULL);
-    SERVER->server_thread = server_thread;
+    pthread_create(&SERVER->server_thread, NULL, run_server, NULL);
     return 0;
 }
