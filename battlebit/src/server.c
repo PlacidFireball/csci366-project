@@ -110,7 +110,17 @@ void* handle_client_connect(void* arg) {
                 cb_free(boardBuffer);
                 pthread_mutex_unlock(&lock);
 
-            } else if (strcmp(command, "reset") == 0) {
+            } else if (strcmp(command, "say")) {
+
+                pthread_mutex_lock(&lock);
+                struct char_buff *say_buff = cb_create(2000);
+                while ((command = cb_next_token(buffer))) {
+                    cb_append(say_buff, command);
+                }
+                send(SERVER->player_sockets[other_player], say_buff->buffer, say_buff->size, 0);
+                pthread_mutex_unlock(&lock);
+
+            }else if (strcmp(command, "reset") == 0) {
 
             // resets the game
                 pthread_mutex_lock(&lock);
