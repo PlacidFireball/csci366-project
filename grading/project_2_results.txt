@@ -41,7 +41,7 @@ string: Foo
 [       OK ] add_ship_vertical.empty_ship (0 ms)
 [ RUN      ] add_ship_vertical.load_ship
 [       OK ] add_ship_vertical.load_ship (0 ms)
-[----------] 2 tests from add_ship_vertical (1 ms total)
+[----------] 2 tests from add_ship_vertical (0 ms total)
 
 [----------] 3 tests from game_load_board
 [ RUN      ] game_load_board.empty_spec
@@ -96,5 +96,5 @@ string: Foo
 [----------] 2 tests from repl_print_hits (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 23 tests from 9 test suites ran. (1 ms total)
+[==========] 23 tests from 9 test suites ran. (0 ms total)
 [  PASSED  ] 23 tests.
