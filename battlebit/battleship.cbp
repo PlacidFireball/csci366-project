@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="battleship"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\googletest\;CMake Files\googletest\lib\;CMake Files\googletest\lib\googlemock\;CMake Files\googletest\lib\googlemock\cmake\;CMake Files\googletest\lib\googletest\;CMake Files\googletest\lib\googletest\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/battleBit" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 battleBit"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/battleBit" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 battleBit/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit_lib">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/libbattleBit_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 battleBit_lib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit_lib/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/libbattleBit_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 battleBit_lib/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit_tests">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/battleBit_tests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/../src"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 battleBit_tests"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit_tests/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/battleBit_tests" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/../src"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 battleBit_tests/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit_checkpoint1">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/battleBit_checkpoint1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/../src"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 battleBit_checkpoint1"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="battleBit_checkpoint1/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/battleBit_checkpoint1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/../src"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 battleBit_checkpoint1/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_main">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 gmock_main"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_main/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgmock_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 gmock_main/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgmockd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 gmock"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgmockd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 gmock/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/include"/>
+					<Add directory="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/char_buff.cpp">
+			<Option target="battleBit_tests"/>
+			<Option target="battleBit_checkpoint1"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/game1.cpp">
+			<Option target="battleBit_tests"/>
+			<Option target="battleBit_checkpoint1"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/game2.cpp">
+			<Option target="battleBit_tests"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/src/gmock-all.cc">
+			<Option target="gmock"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/src/gmock_main.cc">
+			<Option target="gmock_main"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/repl.cpp">
+			<Option target="battleBit_tests"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/char_buff.c">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/char_buff.h">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/game.c">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/game.h">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/helper.c">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/helper.h">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/main.c">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/repl.c">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/repl.h">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/server.c">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/src/server.h">
+			<Option target="battleBit"/>
+			<Option target="battleBit_lib"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest\lib\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest\lib\googlemock\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/cmake/gmock.pc.in">
+			<Option virtualFolder="CMake Files\googletest\lib\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googlemock/cmake/gmock_main.pc.in">
+			<Option virtualFolder="CMake Files\googletest\lib\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\googletest\lib\googletest\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/cmake/Config.cmake.in">
+			<Option virtualFolder="CMake Files\googletest\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/cmake/gtest.pc.in">
+			<Option virtualFolder="CMake Files\googletest\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/cmake/gtest_main.pc.in">
+			<Option virtualFolder="CMake Files\googletest\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/home/placidfireball/Development/C/CSCI366/code/classwork/battlebit/googletest/lib/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\googletest\lib\googletest\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

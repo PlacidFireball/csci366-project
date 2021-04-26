@@ -18,6 +18,8 @@
 
 #define SOCKET_INIT_FAIL -1
 #define SERVER_FAIL -2
+// appends the newline character to the end of a char_buff
+#define APPEND_NEWLINE(buff) cb_append(buff, "\n")
 
 // global variables
 static game_server *SERVER;
@@ -84,7 +86,7 @@ void* handle_client_connect(void* arg) {
                 send(SERVER->player_sockets[player], "Goodbye!\n", strlen("Goodbye!\n"), 0);
                 close(SERVER->player_sockets[player]);  // close the connection
                 char_buff* temp = cb_create(50);
-                cb_append(temp, "Other player disconnected from the server. Goodbye!\n");
+                cb_append(temp, "\nOther player disconnected from the server. Goodbye!\n");
                 send(SERVER->player_sockets[other_player], temp->buffer, temp->size, 0);
                 cb_free(temp);
                 close(SERVER->player_sockets[other_player]);
@@ -111,14 +113,22 @@ void* handle_client_connect(void* arg) {
             } else if (strcmp(command, "say") == 0) {
 
                 pthread_mutex_lock(&lock);
-                cb_next_token(buffer); // advance so we don't get the "say" portion of the message
+                char* next_str = cb_next_token(buffer); // advance so we don't get the "say" portion of the message
                 struct char_buff *say_buff = cb_create(2000); // allocate say_buff
-                while (command) { // while our args aren't null
-                    cb_append(say_buff, command); // append the word onto the say buffer
+                char identity[16];
+                sprintf(identity, "Player %ld says: ", player);
+                APPEND_NEWLINE(say_buff);
+                cb_append(say_buff, identity);
+                while (next_str /*&& (say_buff->size + strlen(next_str)) < say_buff->size*/) { // while our args aren't null and the string will fit in say_buff
+                    cb_append(say_buff, next_str); // append the word onto the say buffer
                     cb_append(say_buff, " "); // add a space between the words
-                    command = cb_next_token(buffer); // advance command
+                    next_str = cb_next_token(buffer); // advance command
                 }
+                APPEND_NEWLINE(say_buff);
+                cb_append(say_buff, prompt); // include the prompt so we don't get lots of text clutter
                 send(SERVER->player_sockets[other_player], say_buff->buffer, say_buff->size, 0); // sends the message
+                printf("%s", say_buff->buffer);
+                cb_free(say_buff);
                 pthread_mutex_unlock(&lock);
 
             }else if (strcmp(command, "reset") == 0) {
@@ -134,6 +144,7 @@ void* handle_client_connect(void* arg) {
                 pthread_mutex_lock(&lock);
                 char *arg1 = cb_next_token(buffer);     // retrieve args
                 game_load_board(CURR_GAME, (int) player, arg1);
+                //if (CURR_GAME->players[0].ships != 0 && CURR_GAME->players[1].ships != 0)
                 pthread_mutex_unlock(&lock);
 
             } else if (strcmp(command, "fire") == 0) {
@@ -157,23 +168,44 @@ void* handle_client_connect(void* arg) {
                         // notify the players
                         char_buff* fire_buff = cb_create(500);
                         char tmp[40];
-                        sprintf(tmp, "\nPlayer %ld fired at %i %i....", player + 1, x, y);
+                        sprintf(tmp, "Player %ld fired at %i %i", player + 1, x, y);
                         cb_append(fire_buff, tmp);
                         // calculate whether on not it was a hit
                         int result = game_fire(CURR_GAME, (int) player, x, y);
                         if (result) {
-                            cb_append(fire_buff, "\tHit!!!\n");
-                        } else {
-                            cb_append(fire_buff, "\tMiss\n");
+                            cb_append(fire_buff, " - HIT");
+                            // Check for wins
+                            if (CURR_GAME->status == PLAYER_0_WINS) cb_append(fire_buff, " - PLAYER 0 WINS\n");
+                            else if (CURR_GAME->status == PLAYER_1_WINS) cb_append(fire_buff, " - PLAYER 1 WINS\n");
+                            else APPEND_NEWLINE(fire_buff);
                         }
-                        server_broadcast(fire_buff);
+                        else cb_append(fire_buff, " - MISS\n");
+                        /*
+                         * This code sends different messages based on who it's sending to, basically just handling
+                         * weird newline and prompt stuff
+                         */
+                        send(SERVER->player_sockets[player], fire_buff->buffer, fire_buff->size, 0); // (fire_buff)
+                        char_buff* tmp_buff = cb_create(500);
+                        APPEND_NEWLINE(tmp_buff);
+                        cb_append(tmp_buff, fire_buff->buffer); // \n(fire_buff)prompt
+                        cb_append(tmp_buff, prompt);
+                        send(SERVER->player_sockets[other_player], tmp_buff->buffer, tmp_buff->size, 0);
+                        printf("%s", tmp_buff->buffer);
                         CURR_GAME->status = other_player_status;
+                        cb_free(fire_buff);
+                        cb_free(tmp_buff);
                     }
                 }
                 else {
                 // handle when it isn't their turn and they try to fire
-                    send(SERVER->player_sockets[player], "It isn't your turn!\n",
-                         strlen("It isn't your turn!\n"), 0);
+                    if (SERVER->player_sockets[other_player] == 0) {
+                        send(SERVER->player_sockets[player], "Game has not begun!\n",
+                             strlen("Game has not begun!\n"), 0);
+                    }
+                    else {
+                        send(SERVER->player_sockets[player], "It isn't your turn!\n",
+                             strlen("It isn't your turn!\n"), 0);
+                    }
                 }
                 pthread_mutex_unlock(&lock);
 
@@ -193,7 +225,8 @@ void* handle_client_connect(void* arg) {
 
 void server_broadcast(char_buff *msg) {
     // send message to all players
-    send(SERVER->player_sockets[1], msg->buffer, msg->size, 0);
+    printf("%s", msg->buffer); // send to server
+    send(SERVER->player_sockets[1], msg->buffer, msg->size, 0); // send to players
     send(SERVER->player_sockets[0], msg->buffer, msg->size, 0);
 }
 
