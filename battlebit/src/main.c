@@ -4,7 +4,7 @@
 #include "game.h"
 
 int main() {
-    printf("Welcome to BattleBit\n\n");
+    printf("Welcome to BattleBit\n");
     /*
      * Step 0 - Debug this main function with a break point on the line after
      * the repl_read_command, and step through some input of the various

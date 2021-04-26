@@ -74,10 +74,11 @@ void* handle_client_connect(void* arg) {
         /* Setup variables, update game and reset the buffer */
         CURR_GAME = game_get_current();
         cb_reset(buffer);
+        char* command = NULL;
         send(SERVER->player_sockets[player], prompt, strlen(prompt), 0);
         recv(SERVER->player_sockets[player], buffer->buffer, buffer->size, 0);
         /* parse user input */
-        char *command = cb_tokenize(buffer, " \n\r");   // note parsing on \r -> all
+        command = cb_tokenize(buffer, " \n\r");   // note parsing on \r -> all
                                                                 // messages sent over server include \r at the end
         if (command) {
             if (strcmp(command, "exit") == 0) {
@@ -144,7 +145,20 @@ void* handle_client_connect(void* arg) {
                 pthread_mutex_lock(&lock);
                 char *arg1 = cb_next_token(buffer);     // retrieve args
                 game_load_board(CURR_GAME, (int) player, arg1);
-                //if (CURR_GAME->players[0].ships != 0 && CURR_GAME->players[1].ships != 0)
+                if (CURR_GAME->players[0].ships != 0 && CURR_GAME->players[1].ships != 0) {
+                    char_buff* load_buff = cb_create(500);
+                    cb_append(load_buff, "\nAll Player Boards Loaded.\nPlayer 0 Turn.\n");
+                    send(SERVER->player_sockets[player], &load_buff->buffer[1], load_buff->size-1, 0);
+                    cb_append(load_buff, prompt);
+                    send(SERVER->player_sockets[other_player], load_buff->buffer, load_buff->size, 0);
+                    printf(load_buff->buffer);
+                    cb_free(load_buff);
+                }
+                else if (CURR_GAME->players[other_player].ships == 0) {
+                    char str[40];
+                    sprintf(str, "Waiting On Player %ld\n", other_player);
+                    send(SERVER->player_sockets[player], str, strlen(str), 0);
+                }
                 pthread_mutex_unlock(&lock);
 
             } else if (strcmp(command, "fire") == 0) {
@@ -190,7 +204,7 @@ void* handle_client_connect(void* arg) {
                         cb_append(tmp_buff, fire_buff->buffer); // \n(fire_buff)prompt
                         cb_append(tmp_buff, prompt);
                         send(SERVER->player_sockets[other_player], tmp_buff->buffer, tmp_buff->size, 0);
-                        printf("%s", tmp_buff->buffer);
+                        printf(tmp_buff->buffer);
                         CURR_GAME->status = other_player_status;
                         cb_free(fire_buff);
                         cb_free(tmp_buff);
@@ -203,8 +217,11 @@ void* handle_client_connect(void* arg) {
                              strlen("Game has not begun!\n"), 0);
                     }
                     else {
-                        send(SERVER->player_sockets[player], "It isn't your turn!\n",
-                             strlen("It isn't your turn!\n"), 0);
+                        char_buff* turn_buff = cb_create(50);
+                        sprintf(turn_buff->buffer, "Player %ld turn.\n", other_player);
+                        send(SERVER->player_sockets[player], turn_buff->buffer,
+                             turn_buff->size, 0);
+                        cb_free(turn_buff);
                     }
                 }
                 pthread_mutex_unlock(&lock);
@@ -225,7 +242,7 @@ void* handle_client_connect(void* arg) {
 
 void server_broadcast(char_buff *msg) {
     // send message to all players
-    printf("%s", msg->buffer); // send to server
+    printf(msg->buffer); // send to server
     send(SERVER->player_sockets[1], msg->buffer, msg->size, 0); // send to players
     send(SERVER->player_sockets[0], msg->buffer, msg->size, 0);
 }

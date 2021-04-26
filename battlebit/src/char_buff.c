@@ -53,7 +53,10 @@ void cb_free(struct char_buff * buffer) {
 }
 
 void cb_reset(struct char_buff * buffer) {
-    buffer->buffer[0] = '\0'; // null terminate
+    for (int i = 0; i < buffer->size; i++) {
+        if (buffer->buffer[i] == '\0') break;
+        buffer->buffer[i] = '\0';
+    }
     buffer->append_offset = 0;
     buffer->tokienzed_on = NULL;
     buffer->tokenization_save_pointer = NULL;

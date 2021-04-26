@@ -148,7 +148,7 @@ void repl_print_hits(struct player_info *player_info, struct char_buff *buffer) 
             cb_append_int(buffer, i/8); // append the numbers on the side (y-values)
         }
         if (mask & player_info->shots) {
-            if (player_info->shots & player_info->hits)
+            if (player_info->shots & mask & player_info->hits)
                 cb_append(buffer, " H");
             else
                 cb_append(buffer, " M");
